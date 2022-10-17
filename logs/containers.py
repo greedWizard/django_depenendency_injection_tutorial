@@ -2,7 +2,6 @@
 import logging
 
 from dependency_injector.providers import Factory
-
 from dependency_injector.containers import DeclarativeContainer
 
 from .services import EventLogService
@@ -20,3 +19,7 @@ class CatsContainer(DeclarativeContainer):
     cats_logger = Factory(get_logger, logger_name='cats')
     cats_logs_service = Factory(EventLogService, logger=cats_logger)
 
+
+class DogsContainer(DeclarativeContainer):
+    dogs_logger = Factory(get_logger, logger_name='dogs')
+    dogs_logs_service = Factory(EventLogService, logger=dogs_logger)

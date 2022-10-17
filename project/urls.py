@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from logs.views import feed_cat_view, pet_cat_view
+from logs.views import feed_cat_view, feed_dog_view, pet_cat_view, pet_dog_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pet_cat/', pet_cat_view),
     path('feed_cat/', feed_cat_view),
+    path('pet_dog/', pet_dog_view),
+    path('feed_dog/', feed_dog_view),
 ]
