@@ -1,27 +1,26 @@
+from dependency_injector.wiring import inject, Provide
+
 from django.http import HttpRequest, HttpResponse
+from logs.containers import CatsContainer
 
 from logs.services import EventLogService
 
 import logging
 
 
-def pet_cat_view(request: HttpRequest) -> HttpResponse:
-    logger = logging.getLogger('cats')
-    handler = logging.FileHandler('logs/cats.log')
-    logger.setLevel(logging.INFO)
-    logger.addHandler(handler)
-
-    logging_service = EventLogService(logger)
-    logging_service.create_log('A user pet a cat')
+@inject
+def pet_cat_view(
+    request: HttpRequest,
+    cats_logs_service: EventLogService = Provide[CatsContainer.cats_logs_service],
+) -> HttpResponse:
+    cats_logs_service.create_log('Pet cat')
     return HttpResponse(content='ok'.encode())
 
 
-def feed_cat_view(request: HttpRequest) -> HttpResponse:
-    logger = logging.getLogger('cats')
-    handler = logging.FileHandler('logs/cats.log')
-    logger.setLevel(logging.INFO)
-    logger.addHandler(handler)
-
-    logging_service = EventLogService(logger)
-    logging_service.create_log('A user fed a cat')
+@inject
+def feed_cat_view(
+    request: HttpRequest,
+    cats_logs_service: EventLogService = Provide[CatsContainer.cats_logs_service],
+) -> HttpResponse:
+    cats_logs_service.create_log('Feed cat')
     return HttpResponse(content='ok'.encode())
